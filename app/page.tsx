@@ -1,27 +1,77 @@
 "use client";
 
 import { useState } from "react";
-import { Board, Coordinate_Type, Piece_Type } from 'node-game-chess'
+import { Board } from "node-game-chess";
+import { Coordinate_Type, Piece_Type, response } from 'node-game-chess/dist/types'
 
-
+interface Respose {
+  canMoveto: {
+    x: Coordinate_Type,
+    y: Coordinate_Type
+  }[],
+  canCut: {
+    x: Coordinate_Type,
+    y: Coordinate_Type
+  }[]
+}
 
 export default function Home() {
   const [newBoard, setnewBoard] = useState(new Board())
   const [board, setBoard] = useState<Array<Array<Piece_Type | null>>>(newBoard.getBoard())
+  const [response, setResponse] = useState<Respose>({
+    canCut: [],
+    canMoveto: []
+  })
   const [selectedSquare, setSelectedSquare] = useState<[number, number] | null>(null)
   const handleSquareClick = (row: number, col: number) => {
     if (selectedSquare) {
-      if(selectedSquare[0] != row || selectedSquare[1] != col){
-        const response = newBoard.canMove(board, selectedSquare[0] as Coordinate_Type, selectedSquare[1] as Coordinate_Type, row  as Coordinate_Type, col  as Coordinate_Type)
-        if(response){
-          setBoard(response)
+      if(clicked_on_move_or_cut(row as Coordinate_Type, col as Coordinate_Type)){
+        const res = newBoard.move(board, selectedSquare[0] as Coordinate_Type, selectedSquare[1] as Coordinate_Type, row as Coordinate_Type, col as Coordinate_Type)
+        if(res){
+          setBoard(res)
         }
       }
       setSelectedSquare(null)
+      setResponse({
+        canCut: [],
+        canMoveto: []
+      })
     } else if (board[row][col]) {
-      console.log(row, col)
       setSelectedSquare([row, col])
+      const response: response | null = newBoard.canMoveTo(board, row, col)
+      if(response){
+        setResponse(response)
+      }
     }
+  }
+
+  function clicked_on_move_or_cut(row: Coordinate_Type, col: Coordinate_Type){
+    const isMove = response.canMoveto.some((coords) => coords.x === row && coords.y === col);
+    const isCapture = response.canCut.some((coords) => coords.x === row && coords.y === col);
+    if(isMove){
+      return true
+    }
+    
+    if(isCapture){
+      return true
+    }
+    return false;
+  }
+
+  function check_coords(row: Coordinate_Type, col: Coordinate_Type, isBlack: boolean){
+
+    const isMove = response.canMoveto.some((coords) => coords.x === row && coords.y === col);
+    const isCapture = response.canCut.some((coords) => coords.x === row && coords.y === col);
+
+    if(isMove){
+      return "bg-green-500"
+    }
+    
+    if(isCapture){
+      return "bg-red-500"
+    }
+    
+    return isBlack? "bg-[#B58863]" : "bg-[#F0D9B5]"
   }
 
   return (
@@ -37,16 +87,16 @@ export default function Home() {
                 key={`${rowIndex}-${colIndex}`}
                 className={`
                   flex items-center justify-center
-                  ${isBlack ? "bg-[#B58863]" : "bg-[#F0D9B5]"}
+                  ${check_coords(rowIndex as Coordinate_Type, colIndex as Coordinate_Type, isBlack)}
                   ${isSelected ? "ring-2 ring-blue-500 ring-inset" : ""}
                   cursor-pointer
                   relative
+                  border
                 `}
                 onClick={() => handleSquareClick(rowIndex, colIndex)}
               >
                 {piece && (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    {/* Placeholder for actual chess piece images */}
                     <div
                       className={`text-4xl md:text-3xl lg:text-4xl ${piece.color === 'b' ? "text-black" : "text-white"}`}
                     >
@@ -72,7 +122,7 @@ export default function Home() {
         )}
       </div>
       <div className="">
-        Hello
+        
       </div>
     </div>
   )
