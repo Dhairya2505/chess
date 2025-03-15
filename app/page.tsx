@@ -95,7 +95,7 @@ useEffect(() => {
 });
 
   return (
-    <div className="flex flex-col w-full max-w-7xl mx-auto border border-border rounded-md overflow-hidden m-5">
+    <div className="flex flex-col w-full max-w-7xl mx-auto rounded-md overflow-hidden m-5">
       {/* Mobile-only top status section */}
       <div className="lg:hidden w-full p-4">
         <h2 className="text-2xl font-bold mb-4 text-white/80 border-b pb-2 text-center">Chess Game</h2>
@@ -254,7 +254,7 @@ useEffect(() => {
                   <div className="w-3 h-3 rounded-full bg-black mr-2 border border-gray-700"></div>
                   Black Pieces Captured
                 </h4>
-                <div className="flex gap-2 text-2xl min-h-10 items-center w-full bg-gray-300 overflow-auto">
+                <div className={`flex gap-2 text-2xl min-h-10 items-center w-full ${capturedPieces.b.length ? `bg-gray-300` : ``} overflow-auto`}>
                   {capturedPieces.b.map((piece, idx) => (
                     <span key={`black-${idx}`} className="text-black">
                       {piece.name === "pawn"
@@ -358,7 +358,7 @@ useEffect(() => {
                 <div className="w-3 h-3 rounded-full bg-black mr-2 border border-gray-700"></div>
                 Black Pieces Captured
               </h4>
-              <div className="flex gap-2 text-2xl min-h-10 items-center w-full bg-gray-300 overflow-auto">
+              <div className={`flex gap-2 text-2xl min-h-10 items-center w-full ${capturedPieces.b.length ? `bg-gray-300` : ``} overflow-auto`}>
                 {capturedPieces.b.map((piece, idx) => (
                   <span key={`black-${idx}`} className="text-black">
                     {piece.name === "pawn"
