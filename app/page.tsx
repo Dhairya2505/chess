@@ -95,7 +95,7 @@ useEffect(() => {
 });
 
   return (
-    <div className="flex flex-col w-full max-w-7xl mx-auto rounded-md overflow-hidden m-5">
+    <div className="flex flex-col w-full max-w-7xl mx-auto rounded-md overflow-hidden">
       {/* Mobile-only top status section */}
       <div className="lg:hidden w-full p-4">
         <h2 className="text-2xl font-bold mb-4 text-white/80 border-b pb-2 text-center">Chess Game</h2>
@@ -183,7 +183,7 @@ useEffect(() => {
         </div>
 
         {/* Desktop Info Panel */}
-        <div className="hidden lg:flex w-1/2 p-6 flex-col border-l">
+        <div className="hidden lg:flex h-screen w-1/2 p-6 flex-col border-l">
           <h2 className="text-2xl font-bold mb-6 text-white/80 border-b pb-2">Chess Game</h2>
 
           <div className="grid grid-cols-2 gap-6 mb-6">
@@ -383,7 +383,7 @@ useEffect(() => {
         </div>
 
         {/* Move History */}
-        <div className="p-4 rounded-lg shadow-sm flex-1 overflow-hidden flex flex-col border border-gray-700 max-h-[300px]">
+        <div className="p-4 rounded-lg shadow-sm flex-1 overflow-hidden flex flex-col border border-gray-700">
           <h3 className="font-semibold mb-3 text-white/80 border-b pb-1">Move History</h3>
           <div className="overflow-auto flex-1" ref={messagesEndRef}>
             {moveHistory.length > 0 ? (
