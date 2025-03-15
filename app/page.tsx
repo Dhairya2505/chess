@@ -5,6 +5,7 @@ import { useRef, useState, useEffect } from "react";
 import { Board } from "npm-chess";
 import { coordinate, location, piece, response } from "npm-chess/dist/types";
 
+
 export default function Home() {
   const [newBoard, setnewBoard] = useState(new Board())
   const [selectedSquare, setSelectedSquare] = useState<[number, number] | null>(null)
