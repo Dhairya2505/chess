@@ -5,8 +5,8 @@ import { useRef, useState, useEffect } from "react";
 import { Board } from "npm-chess";
 import { coordinate, location, piece, response } from "npm-chess/dist/types";
 
-// import { Board } from "./chess/npm-chess/dist";
-// import { coordinate, location, piece, response  } from "./chess/npm-chess/dist/types";
+// import { Board } from "./chess/npm-chess/src" ;
+// import { coordinate, location, piece, response  } from "./chess/npm-chess/src/types";
 
 export default function Home() {
   const [newBoard, setnewBoard] = useState(new Board())
