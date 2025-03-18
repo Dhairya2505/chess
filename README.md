@@ -41,5 +41,4 @@ Welcome to our engaging and interactive Chess Game! This project allows you to p
 - **Programming Language**: TypeScript
 - **Framework**: Next.js
 - **CSS**: Tailwind CSS
-- **Font**: Google Fonts (Geist Sans and Geist Mono)
 - **Chess Library**: npm-chess
